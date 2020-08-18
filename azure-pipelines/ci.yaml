@@ -35,11 +35,6 @@ jobs:
         projects: '**/*.Tests.csproj'
       condition: succeeded()
 
-    - script: Build.cmd -BuildDoc
-      displayName: Build Doc site
-      continueOnError: true
-      condition: and(succeeded(), eq(variables['_configuration'], 'Release'))
-    
     # Should always run
     - task: PublishBuildArtifacts@1
       inputs:

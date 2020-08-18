@@ -11,12 +11,6 @@ jobs:
 - job: Build
   strategy:
     matrix:
-      Linux-Release:
-        imageName: 'ubuntu-latest'
-        _configuration: Release
-      Mac-Release:
-        imageName: 'macOs-latest'
-        _configuration: Release
       Win-Release:
         imageName: 'windows-latest'
         _configuration: Release

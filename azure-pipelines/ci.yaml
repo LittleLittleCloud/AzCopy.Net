@@ -54,7 +54,7 @@ jobs:
         command: 'custom'
         custom: 'pack'
         arguments: '-c $(_configuration)
-                    -no-build'
+                    --no-build'
       displayName: Pack
       condition: succeeded()
 

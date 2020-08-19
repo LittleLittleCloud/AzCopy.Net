@@ -32,7 +32,7 @@ jobs:
         nobuild: true
         publishTestResults: true
         arguments: '--collect "Code coverage" --settings "CodeCoverage.runsettings"'
-        projects: '**/*.Tests.csproj'
+        projects: '**/*.Test.csproj'
       condition: succeeded()
 
     # Should always run

@@ -46,7 +46,7 @@ jobs:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)\artifacts\Packages\$(_configuration)\*'
+        PathtoPublish: '$(Build.SourcesDirectory)\artifacts\Packages\$(_configuration)\'
         ArtifactName: '$(_configuration) packages folder'
         publishLocation: Container
       displayName: Publish packages folder

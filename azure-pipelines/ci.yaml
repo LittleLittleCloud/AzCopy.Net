@@ -31,7 +31,7 @@ jobs:
         command: 'custom'
         custom: 'msbuild'
         arguments: '-property:Configuration=$(_configuration)
-                    -binaryLogger'
+                    -bl:.\artifacts\log\$(_configuration)\Build.binlog'
       condition: succeeded()
       displayName: Build
 
@@ -42,7 +42,6 @@ jobs:
         nobuild: true
         publishTestResults: true
         arguments: '--collect "Code coverage"
-                    --no-build
                     --settings "CodeCoverage.runsettings"'
         projects: '**/*.Test.csproj'
       condition: succeeded()

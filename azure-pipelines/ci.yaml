@@ -7,35 +7,54 @@ pr:
     include:
     - master
 
-variables:
-  GRANTSETFIXSASTOKEN: $(GRANTSETFIXSASTOKEN)
-  
 jobs:
 - job: Build
   strategy:
     matrix:
-      Win-Release:
+      Win-X64-Release:
         imageName: 'windows-latest'
         _configuration: Release
+        _platform: x64
   pool:
     vmImage: $(imageName)
   steps:
-    - script: init.cmd
-      displayName: initialize
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        feedsToUse: 'config'
+        nugetConfigPath: 'NuGet.config'
       condition: succeeded()
-
-    - script: Build.cmd -Configuration $(_configuration) -Pack -BuildNumber $(BUILD.BUILDNUMBER) -BinaryLog
-      displayName: Build and Pack
-      condition: succeeded()
+      displayName: "Restore"
     
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'custom'
+        arguments: ' msbuild
+                    -property:PlatformTarget=$(_platform)
+                    -property:Configuration=$(_configuration)
+                    -binaryLogger'
+      condition: succeeded()
+      displayName: Build
+
     - task: DotNetCoreCLI@2
       displayName: Test
       inputs:
         command: 'test'
         nobuild: true
         publishTestResults: true
-        arguments: '--collect "Code coverage" --settings "CodeCoverage.runsettings"'
+        arguments: '--collect "Code coverage"
+                    --no-build
+                    --settings "CodeCoverage.runsettings"'
         projects: '**/*.Test.csproj'
+      condition: succeeded()
+      env:
+        GRANTSETFIXSASTOKEN: $(GRANTSETFIXSASTOKEN)
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'custom'
+        arguments: 'pack'
+      displayName: Pack
       condition: succeeded()
 
     # Should always run
@@ -45,7 +64,6 @@ jobs:
         ArtifactName: '$(_configuration) log folder'
         publishLocation: Container
       continueOnError: true
-      condition: failed()
 
     - task: PublishBuildArtifacts@1
       inputs:

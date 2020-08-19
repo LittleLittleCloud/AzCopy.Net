@@ -29,8 +29,8 @@ jobs:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'custom'
-        arguments: ' msbuild
-                    -property:PlatformTarget=$(_platform)
+        custom: 'msbuild'
+        arguments: '-property:PlatformTarget=$(_platform)
                     -property:Configuration=$(_configuration)
                     -binaryLogger'
       condition: succeeded()

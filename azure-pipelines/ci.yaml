@@ -30,8 +30,7 @@ jobs:
       inputs:
         command: 'custom'
         custom: 'msbuild'
-        arguments: '-property:PlatformTarget=$(_platform)
-                    -property:Configuration=$(_configuration)
+        arguments: '-property:Configuration=$(_configuration)
                     -binaryLogger'
       condition: succeeded()
       displayName: Build
@@ -63,6 +62,7 @@ jobs:
         PathtoPublish: '$(Build.SourcesDirectory)\artifacts\log\$(_configuration)'
         ArtifactName: '$(_configuration) log folder'
         publishLocation: Container
+      condition: true
       continueOnError: true
 
     - task: PublishBuildArtifacts@1

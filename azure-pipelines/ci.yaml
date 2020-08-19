@@ -39,9 +39,10 @@ jobs:
       displayName: Test
       inputs:
         command: 'test'
-        nobuild: true
         publishTestResults: true
         arguments: '--collect "Code coverage"
+                    --no-build
+                    -c $(_configuration)
                     --settings "CodeCoverage.runsettings"'
         projects: '**/*.Test.csproj'
       condition: succeeded()
@@ -52,6 +53,8 @@ jobs:
       inputs:
         command: 'custom'
         custom: 'pack'
+        arguments: '-c $(_configuration)
+                    -no-build'
       displayName: Pack
       condition: succeeded()
 

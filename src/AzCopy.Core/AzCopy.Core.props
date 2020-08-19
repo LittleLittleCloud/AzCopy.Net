@@ -1,0 +1,22 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)\runtimes\win-x64\native\azcopy.exe"
+             Condition="'$(OS)' == 'Windows_NT' AND ('$(PlatformTarget)' == 'x64' OR ('$(PlatformTarget)' == 'AnyCPU' AND '$(Prefer32Bit)' != 'true'))">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+      <Link>azcopy</Link>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\runtimes\win-x86\native\azcopy.exe"
+             Condition="'$(OS)' == 'Windows_NT' AND ('$(PlatformTarget)' == 'x86' OR ('$(PlatformTarget)' == 'AnyCPU' AND '$(Prefer32Bit)' == 'true'))">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+      <Link>azcopy</Link>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)runtimes\osx-x64\native\azcopy"
+         Condition="'$(PlatformTarget)' == 'osx-x64'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+      <Link>azcopy</Link>
+    </Content>
+  </ItemGroup>
+</Project>

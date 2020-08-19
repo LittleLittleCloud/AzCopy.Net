@@ -7,39 +7,6 @@
     <RuntimeIdentifiers>win-x86;win-x64;osx-x64</RuntimeIdentifiers>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="AzCopy.Core.props">
-      <PackagePath>build/netstandard1.0</PackagePath>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="runtimes\win-x64\native\azcopy.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>runtimes/win-x64/native</PackagePath>
-    </Content>
-    <Content Include="runtimes\osx-x64\azcopy">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>runtimes/osx-x64/native</PackagePath>
-    </Content>
-    <Content Include="runtimes\win-x86\native\azcopy.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>runtimes/win-x86/native</PackagePath>
-    </Content>
-    <Content Include="AzCopy.Core.targets">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>build/netstandard1.0</PackagePath>
-    </Content>
-    <Content Include="AzCopy.Core.props">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Pack>true</Pack>
-      <PackagePath>build/netstandard1.0</PackagePath>
-    </Content>
-  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Nerdbank.Streams" Version="2.1.37" />
@@ -50,8 +17,4 @@
   <ItemGroup>
     <ProjectReference Include="..\AzCopy.Contract\AzCopy.Contract.csproj" />
   </ItemGroup>
-
-  <Import Project="AzCopy.Core.props" />
-  <Import Project="AzCopy.Core.targets" />
-
 </Project>

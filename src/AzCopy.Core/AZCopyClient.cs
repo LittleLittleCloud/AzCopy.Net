@@ -31,9 +31,25 @@ namespace Microsoft.AzCopy
 
         private static string GetAzCopyPath()
         {
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string azCopyPath = Path.Combine(assemblyFolder, "azcopy");
-            return azCopyPath;
+            try
+            {
+                var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string azCopyPath = Path.Combine(assemblyFolder, "azcopy.exe");
+                if (!File.Exists(azCopyPath))
+                {
+                    throw new FileNotFoundException();
+                }
+
+                return azCopyPath;
+            }
+            catch (FileNotFoundException)
+            {
+                throw new Exception("Make sure you use one of the following nuget package: AzCopy.WinX64");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private async Task StartAZCopy(string args, CancellationToken ct = default, Dictionary<string, string> envs = default)

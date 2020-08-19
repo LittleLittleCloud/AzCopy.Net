@@ -20,6 +20,14 @@
   <ItemGroup Condition="'$(OS)' == 'Windows_NT' AND ('$(PlatformTarget)' == 'x86' OR ('$(PlatformTarget)' != 'x64' AND '$(Prefer32Bit)' == 'true'))">
     <ProjectReference Include="..\AzCopy.WinX86\AzCopy.WinX86.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(OS)' == 'OSX' AND ('$(PlatformTarget)' == 'x64' OR ('$(PlatformTarget)' != 'x64' AND '$(Prefer32Bit)' == 'true'))">
+    <ProjectReference Include="..\AzCopy.OsxX64\AzCopy.OsxX64.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(OS)' == 'Unix' AND ('$(PlatformTarget)' == 'x64' OR ('$(PlatformTarget)' != 'x64' AND '$(Prefer32Bit)' == 'true'))">
+    <ProjectReference Include="..\AzCopy.Linux\AzCopy.LinuxX64.csproj" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\AzCopy.Core\AzCopy.Core.csproj" />

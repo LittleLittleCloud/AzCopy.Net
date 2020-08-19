@@ -21,8 +21,11 @@ jobs:
       displayName: initialize
       condition: succeeded()
 
-    - script: Build.cmd -Configuration $(_configuration) -Pack -BuildNumber $(BUILD.BUILDNUMBER) -BinaryLog
+    - bash: |
+         Build.cmd -Configuration $(_configuration) -Pack -BuildNumber $(BUILD.BUILDNUMBER) -BinaryLog
       displayName: Build and Pack
+      env:
+        GRANTSETFIXSASTOKEN: $(GRANTSETFIXSASTOKEN)
       condition: succeeded()
     
     - task: DotNetCoreCLI@2

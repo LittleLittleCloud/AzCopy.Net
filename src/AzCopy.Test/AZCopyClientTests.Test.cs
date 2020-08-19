@@ -25,7 +25,8 @@ namespace Microsoft.AzCopy.Test
         {
             this.output = output;
             this.resourceUri = @"https://test1storageafyok6j49.blob.core.windows.net";
-            this.sasToken = @"?sv=2019-12-12&ss=bfqt&srt=co&sp=rwdlacupx&se=2020-08-28T10:19:36Z&st=2020-08-17T02:19:36Z&spr=https&sig=xIn%2FZ1K3rcJpSOh3LvRwKeRtdpkQYDJIjX63uln6jio%3D";
+            var sasToken = Environment.GetEnvironmentVariable("GRANTSETFIXSASTOKEN");
+            this.sasToken = sasToken;
             this.container = "grantsetfix";
         }
 

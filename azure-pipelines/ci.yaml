@@ -51,7 +51,7 @@ jobs:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'custom'
-        arguments: 'pack'
+        custom: 'pack'
       displayName: Pack
       condition: succeeded()
 

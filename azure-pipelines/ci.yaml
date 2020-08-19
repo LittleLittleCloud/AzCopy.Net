@@ -11,10 +11,18 @@ jobs:
 - job: Build
   strategy:
     matrix:
-      Win-X64-Release:
+      Win-x64-Release:
         imageName: 'windows-latest'
         _configuration: Release
         _platform: x64
+      Linux-x64-Release:
+        imageName: 'ubuntu-latest'
+        _configuration: Release
+        _platform: x64    
+      Osx-x64-Release:
+        imageName: 'macOS-latest'
+        _configuration: Release
+        _platform: x64            
   pool:
     vmImage: $(imageName)
   steps:

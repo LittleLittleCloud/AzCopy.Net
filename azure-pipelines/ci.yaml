@@ -7,6 +7,9 @@ pr:
     include:
     - master
 
+variables:
+  GRANTSETFIXSASTOKEN: $(GRANTSETFIXSASTOKEN)
+  
 jobs:
 - job: Build
   strategy:
@@ -21,11 +24,8 @@ jobs:
       displayName: initialize
       condition: succeeded()
 
-    - bash: |
-         Build.cmd -Configuration $(_configuration) -Pack -BuildNumber $(BUILD.BUILDNUMBER) -BinaryLog
+    - script: Build.cmd -Configuration $(_configuration) -Pack -BuildNumber $(BUILD.BUILDNUMBER) -BinaryLog
       displayName: Build and Pack
-      env:
-        GRANTSETFIXSASTOKEN: $(GRANTSETFIXSASTOKEN)
       condition: succeeded()
     
     - task: DotNetCoreCLI@2

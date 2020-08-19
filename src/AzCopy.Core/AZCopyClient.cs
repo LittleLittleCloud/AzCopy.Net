@@ -34,7 +34,7 @@ namespace Microsoft.AzCopy
             try
             {
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                string azCopyPath = Path.Combine(assemblyFolder, "azcopy.exe");
+                string azCopyPath = Path.Combine(assemblyFolder, "azcopy");
                 if (!File.Exists(azCopyPath))
                 {
                     throw new FileNotFoundException();

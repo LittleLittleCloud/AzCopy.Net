@@ -13,6 +13,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
       <PackagePath>runtimes/win-x64/native</PackagePath>
+      <Link>azcopy</Link>
     </Content>
   </ItemGroup>
 

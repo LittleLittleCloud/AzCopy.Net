@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="azcopy.exe">
+    <Content Include="runtimes\azcopy-win64.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win-x64/native/azcopy.exe</PackagePath>
+      <Link>azcopy</Link>
     </Content>
   </ItemGroup>
   

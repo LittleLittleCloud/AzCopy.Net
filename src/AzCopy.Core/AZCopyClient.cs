@@ -32,7 +32,7 @@ namespace Microsoft.AzCopy
         private static string GetAzCopyPath()
         {
             var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string azCopyPath = Path.Combine(assemblyFolder, "azcopy.exe");
+            string azCopyPath = Path.Combine(assemblyFolder, "azcopy");
             return azCopyPath;
         }
 

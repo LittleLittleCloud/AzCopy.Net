@@ -13,7 +13,6 @@
       <PackagePath>runtimes/osx-x64/native</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
-      <Link>azcopy</Link>
     </Content>
   </ItemGroup>
 </Project>

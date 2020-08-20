@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(OS)' == 'Unix' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' != 'true'))">
-    <ProjectReference Include="..\AzCopy.Linux\AzCopy.LinuxX64.csproj" />
+    <ProjectReference Include="..\AzCopy.LinuxX64\AzCopy.LinuxX64.csproj" />
   </ItemGroup>
   
   <ItemGroup>

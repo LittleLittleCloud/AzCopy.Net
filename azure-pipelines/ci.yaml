@@ -70,7 +70,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.SourcesDirectory)/artifacts/log/$(_configuration)'
-        ArtifactName: '$(_configuration) log folder'
+        ArtifactName: '$(imageName) $(_configuration) log folder'
         publishLocation: Container
       condition: true
       continueOnError: true
@@ -78,7 +78,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.SourcesDirectory)/artifacts/Packages/$(_configuration)/'
-        ArtifactName: '$(_configuration) packages folder'
+        ArtifactName: '$(imageName) $(_configuration) packages folder'
         publishLocation: Container
       displayName: Publish packages folder
       continueOnError: true

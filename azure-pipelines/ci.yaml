@@ -79,7 +79,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.SourcesDirectory)/artifacts/log/$(_configuration)'
-        ArtifactName: '$(imageName) $(_configuration) log folder'
+        ArtifactName: '$(imageName) $(_platform) $(_configuration) log folder'
         publishLocation: Container
       condition: true
       continueOnError: true

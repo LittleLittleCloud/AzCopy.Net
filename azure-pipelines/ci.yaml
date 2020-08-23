@@ -15,18 +15,22 @@ jobs:
         imageName: 'windows-latest'
         _configuration: Release
         _Use32Bit: false
+        _platform: x64
       Win-x32-Release:
         imageName: 'windows-latest'
         _configuration: Release
         _Use32Bit: true
+        _platform: x86
       Linux-x64-Release:
         imageName: 'ubuntu-latest'
         _configuration: Release
-        _Use32Bit: false   
+        _Use32Bit: false
+        _platform: x64
       Osx-x64-Release:
         imageName: 'macOS-latest'
         _configuration: Release
-        _Use32Bit: false       
+        _Use32Bit: false
+        _platform: x64
   pool:
     vmImage: $(imageName)
   steps:
@@ -83,7 +87,7 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.SourcesDirectory)/artifacts/Packages/$(_configuration)/'
-        ArtifactName: '$(imageName) $(_configuration) packages folder'
+        ArtifactName: '$(imageName) $(_platform) $(_configuration) packages folder'
         publishLocation: Container
       displayName: Publish packages folder
       continueOnError: true

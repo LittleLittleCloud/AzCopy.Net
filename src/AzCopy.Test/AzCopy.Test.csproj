@@ -42,7 +42,7 @@
   <Target Name="_MakeAzCopyExecutable"
           AfterTargets="AfterBuild"
           Condition="'$(OS)' != 'Windows_NT'">
-    <Exec Command="chmod +x azcopy" />
+    <Exec Command="chmod +x $(OutDir)azcopy" />
   </Target>
 
 </Project>

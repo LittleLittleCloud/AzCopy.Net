@@ -14,7 +14,7 @@ jobs:
       Win-x64-Release:
         imageName: 'windows-latest'
         _configuration: Release
-        _Platform: AnyCPU
+        _Platform: Any CPU
       Win-x32-Release:
         imageName: 'windows-latest'
         _configuration: Release
@@ -22,11 +22,11 @@ jobs:
       Linux-x64-Release:
         imageName: 'ubuntu-latest'
         _configuration: Release
-        _Platform: AnyCPU    
+        _Platform: Any CPU    
       Osx-x64-Release:
         imageName: 'macOS-latest'
         _configuration: Release
-        _Platform: AnyCPU            
+        _Platform: Any CPU            
   pool:
     vmImage: $(imageName)
   steps:

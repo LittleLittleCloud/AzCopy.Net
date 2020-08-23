@@ -20,7 +20,7 @@
     <ProjectReference Include="..\AzCopy.WinX64\AzCopy.WinX64.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(PackageRid)' == 'win' AND ('$(Platform)' == 'x86' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' == 'true' ))">
+  <ItemGroup Condition="'$(PackageRid)' == 'win' AND ('$(Platform)' == 'x86' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' == 'true' ) OR '_Use32Bit' == 'true')">
     <ProjectReference Include="..\AzCopy.WinX86\AzCopy.WinX86.csproj" />
   </ItemGroup>
 

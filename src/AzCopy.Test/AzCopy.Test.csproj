@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
+    <PackageRid Condition="'$(OS)' == 'Windows_NT'">win</PackageRid>
+    <PackageRid Condition="'$(OS)' != 'Windows_NT'">linux</PackageRid>
+    <PackageRid Condition="$([MSBuild]::IsOSPlatform('osx'))">osx</PackageRid>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,19 +16,19 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(OS)' == 'Windows_NT' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x86' AND '$(Prefer32Bit)' != 'true'))">
+  <ItemGroup Condition="'$(PackageRid)' == 'win' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x86' AND '$(Prefer32Bit)' != 'true'))">
     <ProjectReference Include="..\AzCopy.WinX64\AzCopy.WinX64.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(OS)' == 'Windows_NT' AND ('$(Platform)' == 'x86' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' == 'true' ))">
+  <ItemGroup Condition="'$(PackageRid)' == 'win' AND ('$(Platform)' == 'x86' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' == 'true' ))">
     <ProjectReference Include="..\AzCopy.WinX86\AzCopy.WinX86.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(OS)' == 'OSX' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' != 'true'))">
+  <ItemGroup Condition="'$(PackageRid)' == 'osx' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' != 'true'))">
     <ProjectReference Include="..\AzCopy.OsxX64\AzCopy.OsxX64.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(OS)' == 'Unix' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' != 'true'))">
+  <ItemGroup Condition="'$(PackageRid)' == 'linux' AND ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x64' AND '$(Prefer32Bit)' != 'true'))">
     <ProjectReference Include="..\AzCopy.LinuxX64\AzCopy.LinuxX64.csproj" />
   </ItemGroup>
   

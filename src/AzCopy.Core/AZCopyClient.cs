@@ -19,14 +19,14 @@ namespace Microsoft.AzCopy
         {
             // Locations must be in quotes. It could have spaces in the name and the CLI would interpret as separate parameters.
             var args = $"copy \"{src.LocationToString()}\" \"{dst.LocationToString()}\" {option.ToCommandLineString()} --output-type=json --cancel-from-stdin";
-            await this.StartAZCopy(args, ct);
+            await this.StartAZCopyAsync(args, ct);
         }
 
         public async Task DeleteAsync(IAZCopyLocation dst, AZDeleteOption option, CancellationToken ct = default)
         {
             // Lcations must be in quotes. It could have spaces in the name and the CLI would interpret as separate parameters.
             var args = $"rm \"{dst.LocationToString()}\" {option.ToCommandLineString()} --output-type=json --cancel-from-stdin";
-            await this.StartAZCopy(args, ct);
+            await this.StartAZCopyAsync(args, ct);
         }
 
         private static string GetAzCopyPath()
@@ -58,7 +58,7 @@ namespace Microsoft.AzCopy
             }
         }
 
-        private async Task StartAZCopy(string args, CancellationToken ct = default, Dictionary<string, string> envs = default)
+        private async Task StartAZCopyAsync(string args, CancellationToken ct = default, Dictionary<string, string> envs = default)
         {
             string azCopyPath = GetAzCopyPath();
             var procInfo = new ProcessStartInfo(azCopyPath);

@@ -10,5 +10,6 @@
   <files>
     <file src="..\..\artifacts\bin\AzCopy.OsxX64\**\*.dll" target="lib\netstandard1.0" exclude="..\..\artifacts\bin\AzCopy.OsxX64\**\*.dll" />
     <file src="azcopy" target="runtimes/osx-x64/native" />
+    <file src="AzCopy.OsxX64.targets" target="build\netstandard1.0" />
   </files>
 </package>

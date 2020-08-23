@@ -14,19 +14,19 @@ jobs:
       Win-x64-Release:
         imageName: 'windows-latest'
         _configuration: Release
-        _prefer32bit: false
+        _Platform: AnyCPU
       Win-x32-Release:
         imageName: 'windows-latest'
         _configuration: Release
-        _prefer32bit: true
+        _Platform: x86
       Linux-x64-Release:
         imageName: 'ubuntu-latest'
         _configuration: Release
-        _prefer32bit: false    
+        _Platform: AnyCPU    
       Osx-x64-Release:
         imageName: 'macOS-latest'
         _configuration: Release
-        _prefer32bit: false            
+        _Platform: AnyCPU            
   pool:
     vmImage: $(imageName)
   steps:
@@ -43,7 +43,7 @@ jobs:
         command: 'custom'
         custom: 'msbuild'
         arguments: '-property:Configuration=$(_configuration)
-                    -property:Prefer32Bit=$(_prefer32bit)
+                    -property:Platform=$(_Platform)
                     -bl:./artifacts/log/$(_configuration)/Build.binlog'
       condition: succeeded()
       displayName: Build

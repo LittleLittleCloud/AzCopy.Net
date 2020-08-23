@@ -33,6 +33,12 @@ namespace Microsoft.AzCopy
         {
             try
             {
+                // First check if $env.AzCopyPath exists
+                if (Environment.GetEnvironmentVariable("AZCOPYPATH") != null)
+                {
+                    return Environment.GetEnvironmentVariable("AZCOPYPATH");
+                }
+
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 string azCopyPath = Path.Combine(assemblyFolder, "azcopy");
                 if (!File.Exists(azCopyPath))
@@ -44,7 +50,7 @@ namespace Microsoft.AzCopy
             }
             catch (FileNotFoundException)
             {
-                throw new Exception("Make sure you use one of the following nuget package: AzCopy.WinX64");
+                throw new Exception(@"Can't find azcopy. Make sure you install azcopy and set its path to $AZCOPYPATH on your system, or use one of the following nuget package: AzCopy.WinX64, AzCopy.LinuxX64, AzCopy.OsxX64.");
             }
             catch (Exception)
             {

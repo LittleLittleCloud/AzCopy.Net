@@ -18,7 +18,7 @@
 
   <ItemGroup Condition="'$(PackageRid)' == 'win' AND
                          ('$(Platform)' == 'x64' OR ('$(Platform)' != 'x86' AND '$(Prefer32Bit)' != 'true')) AND
-                         '$(_Use32Bit)' == false ">
+                         '$(_Use32Bit)' != true ">
     <ProjectReference Include="..\AzCopy.WinX64\AzCopy.WinX64.csproj" />
   </ItemGroup>
 

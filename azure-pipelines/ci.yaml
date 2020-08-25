@@ -21,16 +21,6 @@ jobs:
         _configuration: Release
         _Use32Bit: true
         _platform: x86
-      Linux-x64-Release:
-        imageName: 'ubuntu-latest'
-        _configuration: Release
-        _Use32Bit: false
-        _platform: x64
-      Osx-x64-Release:
-        imageName: 'macOS-latest'
-        _configuration: Release
-        _Use32Bit: false
-        _platform: x64
   pool:
     vmImage: $(imageName)
   steps:

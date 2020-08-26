@@ -38,6 +38,7 @@ jobs:
         custom: 'msbuild'
         arguments: '-property:Configuration=$(_configuration)
                     -property:_Use32Bit=$(_Use32Bit)
+                    -property:BUILDNUMBER=$(Date:yyyyMMdd)$(Rev:r)
                     -bl:./artifacts/log/$(_configuration)/Build.binlog'
       condition: succeeded()
       displayName: Build

@@ -62,7 +62,8 @@ jobs:
         command: 'custom'
         custom: 'pack'
         arguments: '-c $(_configuration)
-                    --no-build'
+                    --no-build
+                    -property:BUILDNUMBER=release'
       displayName: Pack
       condition: succeeded()
 

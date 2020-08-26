@@ -495,27 +495,6 @@ namespace Microsoft.AzCopy.Test
             Assert.True(isSkip);
         }
 
-        [Fact]
-        public void TestParseAZCopyMessages()
-        {
-            // AZCopyEndOfJobMessage
-            var json = @"{
-    ""TimeStamp"": ""2019-11-19T13:58:16.5202825-08:00"",
-    ""MessageType"": ""EndOfJob"",
-    ""MessageContent"": ""{\""ErrorMsg\"":\""\"",\""ActiveConnections\"":0,\""CompleteJobOrdered\"":true,\""JobStatus\"":\""Completed\"",\""TotalTransfers\"":1,\""TransfersCompleted\"":1,\""TransfersFailed\"":0,\""TransfersSkipped\"":0,\""BytesOverWire\"":1073741824,\""TotalBytesTransferred\"":1073741824,\""TotalBytesEnumerated\"":1073741824,\""TotalBytesExpected\"":1073741824,\""PercentComplete\"":100,\""AverageIOPS\"":7,\""AverageE2EMilliseconds\"":7544,\""ServerBusyPercentage\"":0,\""NetworkErrorPercentage\"":0,\""FailedTransfers\"":[],\""SkippedTransfers\"":null,\""PerfConstraint\"":0,\""PerformanceAdvice\"":[],\""IsCleanupJob\"":false}"",
-    ""PromptDetails"": {
-        ""PromptType"": """",
-        ""ResponseOptions"": null,
-        ""PromptTarget"": """"
-    }
-}";
-            var azCopyEndOfJobMessage = AZCopyMessageFactory.CreateFromJson(json) as AZCopyEndOfJobMessage;
-            Assert.Equal("Completed", azCopyEndOfJobMessage.JobStatus);
-            Assert.Equal(100, azCopyEndOfJobMessage.PercentComplete);
-            Assert.Empty(azCopyEndOfJobMessage.SkippedTransfers);
-            Assert.Empty(azCopyEndOfJobMessage.FailedTransfers);
-        }
-
         private string GetRandomFileName()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

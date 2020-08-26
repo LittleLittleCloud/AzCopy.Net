@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AzCopy
+namespace AzCopy.Contract
 {
     public interface IAZCopyClient : IAZCopyChannel
     {

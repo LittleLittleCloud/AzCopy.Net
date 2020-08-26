@@ -2,7 +2,7 @@
 using Microsoft.AzCopy.Contract;
 using System;
 
-namespace Microsoft.AzCopy
+namespace AzCopy.Contract
 {
     public interface IAZCopyChannel
     {

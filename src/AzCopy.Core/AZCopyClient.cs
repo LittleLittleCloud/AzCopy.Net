@@ -5,7 +5,9 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using AzCopy.Contract;
 using Microsoft.AzCopy.Contract;
+using Newtonsoft.Json;
 
 namespace Microsoft.AzCopy
 {
@@ -13,7 +15,15 @@ namespace Microsoft.AzCopy
     {
         private Process process = default;
 
-        public event EventHandler<AZCopyMessageBase> JobStatusHandler;
+        public event EventHandler<ListJobSummaryResponse> JobStatusMsgHandler;
+
+        public event EventHandler<JsonOutputTemplate> OutputMsgHandler;
+
+        public event EventHandler<InitMsgJsonTemplate> InitMsgHandler;
+
+        public event EventHandler<JsonOutputTemplate> ErrorMsgHanlder;
+
+        public event EventHandler<JsonOutputTemplate> InfoMsgHanlder;
 
         public async Task CopyAsync(IAZCopyLocation src, IAZCopyLocation dst, AZCopyOption option, CancellationToken ct = default)
         {
@@ -99,8 +109,26 @@ namespace Microsoft.AzCopy
         {
             if (e.Data != null)
             {
-                var message = AZCopyMessageFactory.CreateFromJson(e.Data);
-                this.JobStatusHandler?.Invoke(sender, message);
+                var message = JsonConvert.DeserializeObject<JsonOutputTemplate>(e.Data);
+                this.OutputMsgHandler?.Invoke(sender, message);
+
+                switch (message.MessageType)
+                {
+                    case MessageType.Init:
+                        var initMsg = JsonConvert.DeserializeObject<InitMsgJsonTemplate>(message.MessageContent);
+                        this.InitMsgHandler?.Invoke(sender, initMsg);
+                        break;
+                    case MessageType.Error:
+                        this.ErrorMsgHanlder?.Invoke(sender, message);
+                        break;
+                    case MessageType.Info:
+                        this.InfoMsgHanlder?.Invoke(sender, message);
+                        break;
+                    default:
+                        var statusMsg = JsonConvert.DeserializeObject<ListJobSummaryResponse>(message.MessageContent);
+                        this.JobStatusMsgHandler?.Invoke(sender, statusMsg);
+                        break;
+                }
             }
         }
     }

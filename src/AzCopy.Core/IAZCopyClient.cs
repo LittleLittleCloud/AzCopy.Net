@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AzCopy
 {
-    internal interface IAZCopyClient : IAZCopyChannel
+    public interface IAZCopyClient : IAZCopyChannel
     {
         /// <summary>
         /// azcopy copy from local to remote.

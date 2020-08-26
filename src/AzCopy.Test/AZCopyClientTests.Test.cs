@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AzCopy.Contract;
 using Microsoft.AzCopy;
 using Microsoft.AzCopy.Contract;
 using Xunit;
@@ -70,29 +71,33 @@ namespace Microsoft.AzCopy.Test
 
             var option = new AZCopyOption();
             var client = new AZCopyClient();
-            client.JobStatusHandler += (object sender, AZCopyMessageBase e) =>
+            client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
-                this.output.WriteLine(e.MessageType + e.MessageContent);
-                if (e.MessageType == "Info")
+                this.output.WriteLine(e.MessageType);
+                if (e.MessageType == MessageType.Info)
                 {
                     hasInfoMessage = true;
                 }
 
-                if (e.MessageType == "Init")
+                if (e.MessageType == MessageType.Init)
                 {
                     hasInitMessage = true;
                 }
 
-                if (e.MessageType == "Progress")
+                if (e.MessageType == MessageType.Progress)
                 {
                     hasProgressMessage = true;
                 }
 
-                if (e.MessageType == "EndOfJob")
+                if (e.MessageType == MessageType.EndOfJob)
                 {
                     hasEndOfJobMessage = true;
-                    jobCompleted = ((AZCopyEndOfJobMessage)e).JobStatus == "Completed";
                 }
+            };
+
+            client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
+            {
+                jobCompleted = e.JobStatus == JobStatus.Completed;
             };
 
             // create random file
@@ -150,9 +155,9 @@ namespace Microsoft.AzCopy.Test
 
             var option = new AZCopyOption();
             var client = new AZCopyClient();
-            client.JobStatusHandler += (object sender, AZCopyMessageBase e) =>
+            client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
-                this.output.WriteLine(e.MessageContent);
+                this.output.WriteLine(e.MessageType);
                 if (e.MessageType == "Info")
                 {
                     hasInfoMessage = true;
@@ -171,13 +176,17 @@ namespace Microsoft.AzCopy.Test
                 if (e.MessageType == "EndOfJob")
                 {
                     hasEndOfJobMessage = true;
-                    jobCompleted = ((AZCopyEndOfJobMessage)e).JobStatus == "Completed";
                 }
 
                 if (e.MessageType == "Error")
                 {
                     hitError = true;
                 }
+            };
+
+            client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
+            {
+                jobCompleted = e.JobStatus == JobStatus.Completed;
             };
 
             await client.CopyAsync(localFile, sasLocation, option);
@@ -216,7 +225,7 @@ namespace Microsoft.AzCopy.Test
 
             var option = new AZCopyOption();
             var client = new AZCopyClient();
-            client.JobStatusHandler += (object sender, AZCopyMessageBase e) =>
+            client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 this.output.WriteLine(e.MessageType + e.MessageContent);
                 if (e.MessageType == "Info")
@@ -237,9 +246,14 @@ namespace Microsoft.AzCopy.Test
                 if (e.MessageType == "EndOfJob")
                 {
                     hasEndOfJobMessage = true;
-                    jobCanceled = ((AZCopyEndOfJobMessage)e).JobStatus == "Failed";
-                    errorCode = ((AZCopyEndOfJobMessage)e).FailedTransfers[0].ErrorCode;
+
                 }
+            };
+
+            client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
+            {
+                jobCanceled = e.JobStatus == "Failed";
+                errorCode = e.FailedTransfers[0].ErrorCode;
             };
 
             // create random file
@@ -284,7 +298,7 @@ namespace Microsoft.AzCopy.Test
 
             var option = new AZCopyOption();
             var client = new AZCopyClient();
-            client.JobStatusHandler += (object sender, AZCopyMessageBase e) =>
+            client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 this.output.WriteLine(e.MessageContent);
                 if (e.MessageType == "Info")
@@ -300,8 +314,12 @@ namespace Microsoft.AzCopy.Test
                 if (e.MessageType == "EndOfJob")
                 {
                     hasEndOfJobMessage = true;
-                    jobCancelled = ((AZCopyEndOfJobMessage)e).JobStatus == "Cancelled";
                 }
+            };
+
+            client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
+            {
+                jobCancelled = e.JobStatus == JobStatus.Cancelled;
             };
 
             // create cancellation Token
@@ -359,7 +377,7 @@ namespace Microsoft.AzCopy.Test
             };
 
             var client = new AZCopyClient();
-            client.JobStatusHandler += (object sender, AZCopyMessageBase e) =>
+            client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 Console.WriteLine(e.MessageContent);
                 if (e.MessageType == "Info")
@@ -380,9 +398,13 @@ namespace Microsoft.AzCopy.Test
                 if (e.MessageType == "EndOfJob")
                 {
                     hasEndOfJobMessage = true;
-                    jobCompleted = ((AZCopyEndOfJobMessage)e).JobStatus == "Completed";
-                    totalFiles = ((AZCopyEndOfJobMessage)e).TotalTransfers;
                 }
+            };
+
+            client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
+            {
+                jobCompleted = e.JobStatus == JobStatus.Completed;
+                totalFiles = e.TotalTransfers;
             };
 
             await client.CopyAsync(localFile, sasLocation, option);
@@ -433,16 +455,16 @@ namespace Microsoft.AzCopy.Test
             option.CapMbps = "4";
 
             var client = new AZCopyClient();
-            client.JobStatusHandler += (object sender, AZCopyMessageBase e) =>
+            client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 this.output.WriteLine(e.MessageContent);
+            };
 
-                if (e.MessageType == "EndOfJob")
+            client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
+            {
+                if (e.JobStatus == JobStatus.CompletedWithSkipped)
                 {
-                    if (((AZCopyEndOfJobMessage)e).JobStatus == "CompletedWithSkipped")
-                    {
-                        isSkip = true;
-                    }
+                    isSkip = true;
                 }
             };
 
@@ -487,8 +509,8 @@ namespace Microsoft.AzCopy.Test
             var azCopyEndOfJobMessage = AZCopyMessageFactory.CreateFromJson(json) as AZCopyEndOfJobMessage;
             Assert.Equal("Completed", azCopyEndOfJobMessage.JobStatus);
             Assert.Equal(100, azCopyEndOfJobMessage.PercentComplete);
-            Assert.Equal(0, azCopyEndOfJobMessage.SkippedTransfers.Count);
-            Assert.Equal(0, azCopyEndOfJobMessage.FailedTransfers.Count);
+            Assert.Empty(azCopyEndOfJobMessage.SkippedTransfers);
+            Assert.Empty(azCopyEndOfJobMessage.FailedTransfers);
         }
 
         private string GetRandomFileName()

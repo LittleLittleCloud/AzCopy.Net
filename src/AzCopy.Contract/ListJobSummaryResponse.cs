@@ -14,7 +14,7 @@ namespace AzCopy.Contract
         [DataMember]
         public string ErrorMsg { get; set; }
 
-        [DataMember(IsRequired = true)]
+        [DataMember]
         public Guid JobID { get; set; }
 
         [DataMember(IsRequired = true)]

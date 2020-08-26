@@ -73,7 +73,7 @@ namespace Microsoft.AzCopy.Test
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
-                this.output.WriteLine(e.MessageType);
+                this.output.WriteLine(e.MessageContent);
                 if (e.MessageType == MessageType.Info)
                 {
                     hasInfoMessage = true;
@@ -227,7 +227,7 @@ namespace Microsoft.AzCopy.Test
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
-                this.output.WriteLine(e.MessageType + e.MessageContent);
+                this.output.WriteLine(e.MessageContent);
                 if (e.MessageType == "Info")
                 {
                     hasInfoMessage = true;
@@ -253,7 +253,10 @@ namespace Microsoft.AzCopy.Test
             client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
             {
                 jobCanceled = e.JobStatus == "Failed";
-                errorCode = e.FailedTransfers[0].ErrorCode;
+                if (jobCanceled)
+                {
+                    errorCode = e.FailedTransfers[0].ErrorCode;
+                }
             };
 
             // create random file

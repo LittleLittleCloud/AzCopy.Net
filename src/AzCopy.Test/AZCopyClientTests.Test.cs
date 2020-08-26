@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AzCopy.Client;
 using AzCopy.Contract;
-using Microsoft.AzCopy;
-using Microsoft.AzCopy.Contract;
 using Xunit;
 using Xunit.Abstractions;
 

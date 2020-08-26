@@ -1,5 +1,4 @@
 ﻿using AzCopy.Contract;
-using Microsoft.AzCopy.Contract;
 using System;
 
 namespace AzCopy.Contract

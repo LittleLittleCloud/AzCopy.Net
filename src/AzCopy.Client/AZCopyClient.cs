@@ -6,10 +6,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using AzCopy.Contract;
-using Microsoft.AzCopy.Contract;
 using Newtonsoft.Json;
 
-namespace Microsoft.AzCopy
+namespace AzCopy.Client
 {
     public class AZCopyClient : IAZCopyClient
     {

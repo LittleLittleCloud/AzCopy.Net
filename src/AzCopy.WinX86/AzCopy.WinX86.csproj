@@ -11,6 +11,8 @@
   <ItemGroup>
     <Content Include="contentFiles\any\any\azcopy.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>azcopy</Link>
+      <Visible>false</Visible>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>

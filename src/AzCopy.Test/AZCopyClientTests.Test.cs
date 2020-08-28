@@ -26,7 +26,7 @@ namespace Microsoft.AzCopy.Test
             this.output = output;
             this.resourceUri = @"https://test1storageafyok6j49.blob.core.windows.net";
             var sasToken = Environment.GetEnvironmentVariable("GRANTSETFIXSASTOKEN");
-            this.sasToken = @"?sv=2019-12-12&ss=bfqt&srt=co&sp=rwdlacupx&se=2020-08-28T07:59:13Z&st=2020-08-27T23:59:13Z&spr=https&sig=YXu3gUPbL5T9J1u7%2Bmz5LYv4npNDpKAFq98Ggh6qxm0%3D";
+            this.sasToken = sasToken;
             this.container = "grantsetfix";
         }
 
@@ -40,7 +40,7 @@ namespace Microsoft.AzCopy.Test
             Assert.Equal("--blob-type \"BlockBlob\"", copyOption.ToCommandLineString());
 
             // set flag as true
-            copyOption.Recursive = string.Empty;
+            copyOption.Recursive = true;
             Assert.Equal("--blob-type \"BlockBlob\" --recursive", copyOption.ToCommandLineString());
         }
 
@@ -374,7 +374,7 @@ namespace Microsoft.AzCopy.Test
 
             var option = new AZCopyOption()
             {
-                Recursive = string.Empty,
+                Recursive = true,
                 IncludePattern = "*.jpg;*.png",
             };
 
@@ -454,7 +454,7 @@ namespace Microsoft.AzCopy.Test
 
             var option = new AZCopyOption();
             option.Overwrite = "ifSourceNewer";
-            option.CapMbps = "4";
+            option.CapMbps = 4;
 
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>

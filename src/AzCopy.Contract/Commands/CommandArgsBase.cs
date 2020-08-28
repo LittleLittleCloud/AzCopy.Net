@@ -27,6 +27,12 @@ namespace AzCopy.Contract
                 return (bool)argValue ? $"{ArgumentPrefix}{cliArgName.ArgumentName}" : string.Empty;
             }
 
+            // handle bool value
+            if (argValue is bool)
+            {
+                argValue = (bool)argValue ? "true" : "false";
+            }
+
             if (cliArgName.UseQuotes)
             {
                 return $"{ArgumentPrefix}{cliArgName.ArgumentName} \"{argValue}\"";

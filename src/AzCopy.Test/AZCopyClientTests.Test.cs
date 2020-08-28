@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AzCopy.Client;
 using AzCopy.Contract;
+using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -31,17 +32,51 @@ namespace Microsoft.AzCopy.Test
         }
 
         [Fact]
-        public void TestAZCopyOption()
+        public void CommandArgsBase_should_build_arguments_if_use_quote_is_true()
+        {
+            var copyOption = new AZCopyOption();
+            copyOption.ToCommandLineString().Should().BeEmpty();
+
+            // BlobType is string type.
+            copyOption.BlobType = "BlockBlob";
+            copyOption.ToCommandLineString().Should().Be("--blob-type \"BlockBlob\"");
+        }
+
+        [Fact]
+        public void CommandArgsBase_should_build_arguments_if_arg_type_is_float()
+        {
+            var copyOption = new AZCopyOption();
+            copyOption.ToCommandLineString().Should().BeEmpty();
+
+            copyOption.CapMbps = 100;
+            copyOption.ToCommandLineString().Should().Be("--cap-mbps 100");
+        }
+
+        [Fact]
+        public void CommandArgsBase_should_build_arguments_if_arg_type_is_bool()
+        {
+            var copyOption = new AZCopyOption();
+            copyOption.ToCommandLineString().Should().BeEmpty();
+
+            copyOption.CheckLength = false;
+            copyOption.ToCommandLineString().Should().Be("--check-length false");
+
+            copyOption.CheckLength = true;
+            copyOption.ToCommandLineString().Should().Be("--check-length true");
+        }
+
+        [Fact]
+        public void CommandArgsBase_should_build_arguments_if_is_flag_is_true()
         {
             var copyOption = new AZCopyOption();
             Assert.Equal(string.Empty, copyOption.ToCommandLineString());
 
-            copyOption.BlobType = "BlockBlob";
-            Assert.Equal("--blob-type \"BlockBlob\"", copyOption.ToCommandLineString());
-
-            // set flag as true
             copyOption.Recursive = true;
-            Assert.Equal("--blob-type \"BlockBlob\" --recursive", copyOption.ToCommandLineString());
+            copyOption.ToCommandLineString().Should().Be("--recursive");
+
+            copyOption.Recursive = false;
+            copyOption.ToCommandLineString().Should().BeEmpty();
+
         }
 
         [Fact]

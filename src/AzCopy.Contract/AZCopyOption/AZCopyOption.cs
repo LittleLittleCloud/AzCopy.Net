@@ -9,7 +9,7 @@
         public string BlobType { get; set; }
 
         /// <summary>
-        /// upload block blob to Azure Storage using this blob tier. (default "None")
+        /// upload block blob to Azure Storage using this blob tier. (default "None").
         /// </summary>
         [CLIArgumentName("block-blob-tier", true)]
         public string BlockBlobTier { get; set; }

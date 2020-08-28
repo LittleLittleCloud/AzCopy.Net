@@ -26,7 +26,7 @@ namespace Microsoft.AzCopy.Test
             this.output = output;
             this.resourceUri = @"https://test1storageafyok6j49.blob.core.windows.net";
             var sasToken = Environment.GetEnvironmentVariable("GRANTSETFIXSASTOKEN");
-            this.sasToken = sasToken;
+            this.sasToken = @"?sv=2019-12-12&ss=bfqt&srt=co&sp=rwdlacupx&se=2020-08-28T07:59:13Z&st=2020-08-27T23:59:13Z&spr=https&sig=YXu3gUPbL5T9J1u7%2Bmz5LYv4npNDpKAFq98Ggh6qxm0%3D";
             this.container = "grantsetfix";
         }
 
@@ -156,28 +156,28 @@ namespace Microsoft.AzCopy.Test
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
-                this.output.WriteLine(e.MessageType);
-                if (e.MessageType == "Info")
+                this.output.WriteLine(e.MessageContent);
+                if (e.MessageType == MessageType.Info)
                 {
                     hasInfoMessage = true;
                 }
 
-                if (e.MessageType == "Init")
+                if (e.MessageType == MessageType.Init)
                 {
                     hasInitMessage = true;
                 }
 
-                if (e.MessageType == "Progress")
+                if (e.MessageType == MessageType.Progress)
                 {
                     hasProgressMessage = true;
                 }
 
-                if (e.MessageType == "EndOfJob")
+                if (e.MessageType == MessageType.EndOfJob)
                 {
                     hasEndOfJobMessage = true;
                 }
 
-                if (e.MessageType == "Error")
+                if (e.MessageType == MessageType.Error)
                 {
                     hitError = true;
                 }
@@ -227,22 +227,22 @@ namespace Microsoft.AzCopy.Test
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 this.output.WriteLine(e.MessageContent);
-                if (e.MessageType == "Info")
+                if (e.MessageType == MessageType.Info)
                 {
                     hasInfoMessage = true;
                 }
 
-                if (e.MessageType == "Init")
+                if (e.MessageType == MessageType.Init)
                 {
                     hasInitMessage = true;
                 }
 
-                if (e.MessageType == "Progress")
+                if (e.MessageType == MessageType.Progress)
                 {
                     hasProgressMessage = true;
                 }
 
-                if (e.MessageType == "EndOfJob")
+                if (e.MessageType == MessageType.EndOfJob)
                 {
                     hasEndOfJobMessage = true;
 
@@ -251,7 +251,7 @@ namespace Microsoft.AzCopy.Test
 
             client.JobStatusMsgHandler += (object sender, ListJobSummaryResponse e) =>
             {
-                jobCanceled = e.JobStatus == "Failed";
+                jobCanceled = e.JobStatus == JobStatus.Failed;
                 if (jobCanceled)
                 {
                     errorCode = e.FailedTransfers[0].ErrorCode;
@@ -303,17 +303,17 @@ namespace Microsoft.AzCopy.Test
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 this.output.WriteLine(e.MessageContent);
-                if (e.MessageType == "Info")
+                if (e.MessageType == MessageType.Info)
                 {
                     hasInfoMessage = true;
                 }
 
-                if (e.MessageType == "Init")
+                if (e.MessageType == MessageType.Init)
                 {
                     hasInitMessage = true;
                 }
 
-                if (e.MessageType == "EndOfJob")
+                if (e.MessageType == MessageType.EndOfJob)
                 {
                     hasEndOfJobMessage = true;
                 }
@@ -382,22 +382,22 @@ namespace Microsoft.AzCopy.Test
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
                 Console.WriteLine(e.MessageContent);
-                if (e.MessageType == "Info")
+                if (e.MessageType == MessageType.Info)
                 {
                     hasInfoMessage = true;
                 }
 
-                if (e.MessageType == "Init")
+                if (e.MessageType == MessageType.Init)
                 {
                     hasInitMessage = true;
                 }
 
-                if (e.MessageType == "Progress")
+                if (e.MessageType == MessageType.Progress)
                 {
                     hasProgressMessage = true;
                 }
 
-                if (e.MessageType == "EndOfJob")
+                if (e.MessageType == MessageType.EndOfJob)
                 {
                     hasEndOfJobMessage = true;
                 }

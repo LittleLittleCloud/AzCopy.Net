@@ -30,11 +30,11 @@ namespace AzCopy.Contract
 
             if (cliArgName.UseQuotes)
             {
-                return $"{ArgumentPrefix}{cliArgName.ArgumentName} \"{argValue}\"";
+                return $"{ArgumentPrefix}{cliArgName.ArgumentName}=\"{argValue}\"";
             }
             else
             {
-                return $"{ArgumentPrefix}{cliArgName.ArgumentName} {argValue}";
+                return $"{ArgumentPrefix}{cliArgName.ArgumentName}={argValue}";
             }
         }
     }

@@ -39,7 +39,7 @@ namespace Microsoft.AzCopy.Test
 
             // BlobType is string type.
             copyOption.BlobType = "BlockBlob";
-            copyOption.ToCommandLineString().Should().Be("--blob-type \"BlockBlob\"");
+            copyOption.ToCommandLineString().Should().Be("--blob-type=\"BlockBlob\"");
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Microsoft.AzCopy.Test
             copyOption.ToCommandLineString().Should().BeEmpty();
 
             copyOption.CapMbps = 100;
-            copyOption.ToCommandLineString().Should().Be("--cap-mbps 100");
+            copyOption.ToCommandLineString().Should().Be("--cap-mbps=100");
         }
 
         [Fact]
@@ -59,10 +59,10 @@ namespace Microsoft.AzCopy.Test
             copyOption.ToCommandLineString().Should().BeEmpty();
 
             copyOption.CheckLength = false;
-            copyOption.ToCommandLineString().Should().Be("--check-length false");
+            copyOption.ToCommandLineString().Should().Be("--check-length=false");
 
             copyOption.CheckLength = true;
-            copyOption.ToCommandLineString().Should().Be("--check-length true");
+            copyOption.ToCommandLineString().Should().Be("--check-length=true");
         }
 
         [Fact]
@@ -72,10 +72,10 @@ namespace Microsoft.AzCopy.Test
             Assert.Equal(string.Empty, copyOption.ToCommandLineString());
 
             copyOption.Recursive = true;
-            copyOption.ToCommandLineString().Should().Be("--recursive true");
+            copyOption.ToCommandLineString().Should().Be("--recursive=true");
 
             copyOption.Recursive = false;
-            copyOption.ToCommandLineString().Should().Be("--recursive false");
+            copyOption.ToCommandLineString().Should().Be("--recursive=false");
 
         }
 

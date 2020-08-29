@@ -3,4 +3,41 @@
     <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="AZCopyOption\Remove.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Remove.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="AZCopyOption\Copy.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Copy.cs</LastGenOutput>
+    </None>
+    <None Update="AZCopyOption\Remove.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Remove.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="AZCopyOption\AzCopyOption.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AzCopyOption.tt</DependentUpon>
+    </Compile>
+    <Compile Update="AZCopyOption\Copy.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Copy.tt</DependentUpon>
+    </Compile>
+    <Compile Update="AZCopyOption\Remove.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Remove.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

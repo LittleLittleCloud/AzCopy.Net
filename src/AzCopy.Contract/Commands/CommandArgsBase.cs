@@ -22,11 +22,6 @@ namespace AzCopy.Contract
             var cliArgName = (CLIArgumentName)property.GetCustomAttribute(typeof(CLIArgumentName));
             var argValue = property.GetValue(this);
 
-            if (cliArgName.IsFlag)
-            {
-                return (bool)argValue ? $"{ArgumentPrefix}{cliArgName.ArgumentName}" : string.Empty;
-            }
-
             // handle bool value
             if (argValue is bool)
             {

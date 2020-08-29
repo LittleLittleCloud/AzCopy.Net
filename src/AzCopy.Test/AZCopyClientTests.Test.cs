@@ -34,7 +34,7 @@ namespace Microsoft.AzCopy.Test
         [Fact]
         public void CommandArgsBase_should_build_arguments_if_use_quote_is_true()
         {
-            var copyOption = new AZCopyOption();
+            var copyOption = new CopyOption();
             copyOption.ToCommandLineString().Should().BeEmpty();
 
             // BlobType is string type.
@@ -45,7 +45,7 @@ namespace Microsoft.AzCopy.Test
         [Fact]
         public void CommandArgsBase_should_build_arguments_if_arg_type_is_float()
         {
-            var copyOption = new AZCopyOption();
+            var copyOption = new CopyOption();
             copyOption.ToCommandLineString().Should().BeEmpty();
 
             copyOption.CapMbps = 100;
@@ -55,7 +55,7 @@ namespace Microsoft.AzCopy.Test
         [Fact]
         public void CommandArgsBase_should_build_arguments_if_arg_type_is_bool()
         {
-            var copyOption = new AZCopyOption();
+            var copyOption = new CopyOption();
             copyOption.ToCommandLineString().Should().BeEmpty();
 
             copyOption.CheckLength = false;
@@ -68,14 +68,14 @@ namespace Microsoft.AzCopy.Test
         [Fact]
         public void CommandArgsBase_should_build_arguments_if_is_flag_is_true()
         {
-            var copyOption = new AZCopyOption();
+            var copyOption = new CopyOption();
             Assert.Equal(string.Empty, copyOption.ToCommandLineString());
 
             copyOption.Recursive = true;
-            copyOption.ToCommandLineString().Should().Be("--recursive");
+            copyOption.ToCommandLineString().Should().Be("--recursive true");
 
             copyOption.Recursive = false;
-            copyOption.ToCommandLineString().Should().BeEmpty();
+            copyOption.ToCommandLineString().Should().Be("--recursive false");
 
         }
 
@@ -103,7 +103,7 @@ namespace Microsoft.AzCopy.Test
                 SasToken = this.sasToken,
             };
 
-            var option = new AZCopyOption();
+            var option = new CopyOption();
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
@@ -155,8 +155,8 @@ namespace Microsoft.AzCopy.Test
             hasEndOfJobMessage = false;
             jobCompleted = false;
 
-            var deleteOption = new AZDeleteOption();
-            await client.DeleteAsync(sasLocation, deleteOption);
+            var deleteOption = new RemoveOption();
+            await client.RemoveAsync(sasLocation, deleteOption);
             Assert.True(hasInitMessage);
             Assert.True(hasProgressMessage);
             Assert.True(hasEndOfJobMessage);
@@ -187,7 +187,7 @@ namespace Microsoft.AzCopy.Test
                 SasToken = this.sasToken,
             };
 
-            var option = new AZCopyOption();
+            var option = new CopyOption();
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
@@ -257,7 +257,7 @@ namespace Microsoft.AzCopy.Test
                 SasToken = this.sasToken,
             };
 
-            var option = new AZCopyOption();
+            var option = new CopyOption();
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
@@ -333,7 +333,7 @@ namespace Microsoft.AzCopy.Test
                 SasToken = this.sasToken,
             };
 
-            var option = new AZCopyOption();
+            var option = new CopyOption();
             var client = new AZCopyClient();
             client.OutputMsgHandler += (object sender, JsonOutputTemplate e) =>
             {
@@ -407,7 +407,7 @@ namespace Microsoft.AzCopy.Test
                 SasToken = this.sasToken,
             };
 
-            var option = new AZCopyOption()
+            var option = new CopyOption()
             {
                 Recursive = true,
                 IncludePattern = "*.jpg;*.png",
@@ -457,11 +457,11 @@ namespace Microsoft.AzCopy.Test
             hasEndOfJobMessage = false;
             jobCompleted = false;
 
-            var deleteOption = new AZDeleteOption()
+            var deleteOption = new RemoveOption()
             {
-                Recursive = string.Empty,
+                Recursive = true,
             };
-            await client.DeleteAsync(sasLocation, deleteOption);
+            await client.RemoveAsync(sasLocation, deleteOption);
             Assert.True(hasInitMessage);
             Assert.True(hasProgressMessage);
             Assert.True(hasEndOfJobMessage);
@@ -487,7 +487,7 @@ namespace Microsoft.AzCopy.Test
                 SasToken = this.sasToken,
             };
 
-            var option = new AZCopyOption();
+            var option = new CopyOption();
             option.Overwrite = "ifSourceNewer";
             option.CapMbps = 4;
 
@@ -520,11 +520,11 @@ namespace Microsoft.AzCopy.Test
             // upload again
             await client.CopyAsync(localFile, sasLocation, option);
 
-            var deleteOption = new AZDeleteOption()
+            var deleteOption = new RemoveOption()
             {
-                Recursive = string.Empty,
+                Recursive = true,
             };
-            await client.DeleteAsync(sasLocation, deleteOption);
+            await client.RemoveAsync(sasLocation, deleteOption);
 
             Assert.True(isSkip);
         }

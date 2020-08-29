@@ -29,13 +29,15 @@ namespace AzCopy.Client
         public async Task CopyAsync(IAZCopyLocation src, IAZCopyLocation dst, CopyOption option, CancellationToken ct = default)
         {
             // Locations must be in quotes. It could have spaces in the name and the CLI would interpret as separate parameters.
-            var args = $"copy \"{src.LocationToString()}\" \"{dst.LocationToString()}\" {option.ToCommandLineString()} --output-type=json --cancel-from-stdin";
+            option.OutputType = "json";
+            var args = $"copy \"{src.LocationToString()}\" \"{dst.LocationToString()}\" {option.ToCommandLineString()} --cancel-from-stdin";
             await this.StartAZCopyAsync(args, ct);
         }
 
         public async Task RemoveAsync(IAZCopyLocation dst, RemoveOption option, CancellationToken ct = default)
         {
             // Lcations must be in quotes. It could have spaces in the name and the CLI would interpret as separate parameters.
+            option.OutputType = "json";
             var args = $"rm \"{dst.LocationToString()}\" {option.ToCommandLineString()} --output-type=json --cancel-from-stdin";
             await this.StartAZCopyAsync(args, ct);
         }

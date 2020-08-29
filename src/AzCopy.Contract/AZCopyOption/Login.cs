@@ -5,12 +5,6 @@ namespace AzCopy.Contract
     public class LoginOption : CommandArgsBase
     {
         /// <summary>
-		/// mandatory when doing cert-based service principal auth.
-        /// </summary>
-		[CLIArgumentName("certificate-path")]
-		public is? CertificatePath { get; set; }
-
-        /// <summary>
 		/// The Azure Active Directory endpoint to use. The default (https://login.microsoftonline.com) is correct for the public Azure cloud. Set this parameter when authenticating in a national cloud. Not needed for Managed Service Identity
         /// </summary>
 		[CLIArgumentName("aad-endpoint", true)]

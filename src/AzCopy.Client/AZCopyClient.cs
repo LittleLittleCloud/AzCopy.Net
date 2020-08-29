@@ -30,7 +30,6 @@ namespace AzCopy.Client
         {
             // Locations must be in quotes. It could have spaces in the name and the CLI would interpret as separate parameters.
             option.OutputType = "json";
-
             var args = $"copy \"{src.LocationToString()}\" \"{dst.LocationToString()}\" {option.ToCommandLineString()} --cancel-from-stdin";
             await this.StartAZCopyAsync(args, ct);
         }

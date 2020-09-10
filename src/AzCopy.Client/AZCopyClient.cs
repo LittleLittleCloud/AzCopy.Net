@@ -139,7 +139,7 @@ namespace AzCopy.Client
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 string azCopyPath;
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                 {
                     azCopyPath = Path.Combine(assemblyFolder, "azcopy.exe");
                 }
